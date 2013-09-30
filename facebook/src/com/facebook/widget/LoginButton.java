@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -210,7 +211,6 @@ public class LoginButton extends Button {
             this.setTextColor(getResources().getColor(R.color.com_facebook_loginview_text_color));
             this.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     getResources().getDimension(R.dimen.com_facebook_loginview_text_size));
-            this.setTypeface(Typeface.DEFAULT_BOLD);
             if (isInEditMode()) {
                 // cannot use a drawable in edit mode, so setting the background color instead
                 // of a background resource.
@@ -627,10 +627,10 @@ public class LoginButton extends Button {
 
     private void setButtonText() {
         if (sessionTracker != null && sessionTracker.getOpenSession() != null) {
-            setText((logoutText != null) ? logoutText :
+            setText((logoutText != null) ? Html.fromHtml(logoutText) :
                     getResources().getString(R.string.com_facebook_loginview_log_out_button));
         } else {
-            setText((loginText != null) ? loginText :
+            setText((loginText != null) ? Html.fromHtml(loginText) :
                     getResources().getString(R.string.com_facebook_loginview_log_in_button));
         }
     }
