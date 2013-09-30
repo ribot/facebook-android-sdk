@@ -519,6 +519,44 @@ public class LoginButton extends Button {
         fetchUserInfo();
         setButtonText();
     }
+    
+    /**
+     * Set text displayed on button when log in action. 
+     *
+     * @param loginText button text on log in.
+     */
+    public void setLoginText(String loginText) {
+        this.loginText = loginText;
+        setButtonText();
+    }
+
+    /**
+     * Set text displayed on button when log out action. 
+     *
+     * @param logoutText button text on log out.
+     */
+    public void setLogoutText(String logoutText) {
+        this.logoutText = logoutText;
+        setButtonText();
+    }
+
+    /**
+     * Set text displayed on button when log in action. 
+     *
+     * @param resourceId Resource ID of string.
+     */
+    public void setLoginTextResource(int resourceId) {
+        setLoginText(getResources().getString(resourceId));
+    }
+
+    /**
+     * Set text displayed on button when log out action. 
+     *
+     * @param resourceId Resource ID of string.
+     */
+    public void setLogoutTextResource(int resourceId) {
+        setLogoutText(getResources().getString(resourceId));
+    }
 
     @Override
     public void onFinishInflate() {
