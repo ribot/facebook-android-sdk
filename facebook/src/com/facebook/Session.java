@@ -829,6 +829,29 @@ public class Session implements Serializable {
             StatusCallback callback) {
         return openActiveSession(activity, allowLoginUI, new OpenRequest(activity).setCallback(callback));
     }
+    
+    /**
+     * If allowLoginUI is true, this will create a new Session, make it active, and
+     * open it. If the default token cache is not available, then this will request
+     * basic permissions. If the default token cache is available and cached tokens
+     * are loaded, this will use the cached token and associated permissions.
+     * <p/>
+     * If allowedLoginUI is false, this will only create the active session and open
+     * it if it requires no user interaction (i.e. the token cache is available and
+     * there are cached tokens).
+     *
+     * @param activity     The Activity that is opening the new Session.
+     * @param allowLoginUI if false, only sets the active session and opens it if it
+     *                     does not require user interaction
+     * @param permissions  List of permissions
+     * @param callback     The {@link StatusCallback SessionStatusCallback} to
+     *                     notify regarding Session state changes. May be null.
+     * @return The new Session or null if one could not be created
+     */
+    public static Session openActiveSession(Activity activity, boolean allowLoginUI,  List<String> permissions,
+            StatusCallback callback) {
+        return openActiveSession(activity, allowLoginUI, new OpenRequest(activity).setCallback(callback).setPermissions(permissions));
+    }
 
     /**
      * If allowLoginUI is true, this will create a new Session, make it active, and
@@ -994,6 +1017,35 @@ public class Session implements Serializable {
         if (newState == SessionState.OPENING) {
             authorize(openRequest);
         }
+    }
+    
+    /**
+     * If allowLoginUI is true, this will create a new Session, make it active,
+     * and open it. If the default token cache is not available, then this will
+     * request basic permissions. If the default token cache is available and
+     * cached tokens are loaded, this will use the cached token and associated
+     * permissions.
+     * <p/>
+     * If allowedLoginUI is false, this will only create the active session and
+     * open it if it requires no user interaction (i.e. the token cache is
+     * available and there are cached tokens).
+     * 
+     * @param context
+     *            The Activity or Service creating this Session
+     * @param fragment
+     *            The Fragment that is opening the new Session.
+     * @param allowLoginUI
+     *            if false, only sets the active session and opens it if it does
+     *            not require user interaction
+     * @param callback
+     *            The {@link StatusCallback SessionStatusCallback} to notify
+     *            regarding Session state changes.
+     * @param permissions
+     *            The permissions to request.
+     * @return The new Session or null if one could not be created
+     */
+    public static Session openActiveSession(Context context, Fragment fragment, boolean allowLoginUI, StatusCallback callback, List<String> permissions) {
+        return openActiveSession(context, allowLoginUI, new OpenRequest(fragment).setCallback(callback).setPermissions(permissions));
     }
 
     private void requestNewPermissions(NewPermissionsRequest newPermissionsRequest, SessionAuthorizationType authType) {
@@ -1656,6 +1708,7 @@ public class Session implements Serializable {
             startActivityDelegate = new StartActivityDelegate() {
                 @Override
                 public void startActivityForResult(Intent intent, int requestCode) {
+                    Log.d("YOYO","Using activity");
                     activity.startActivityForResult(intent, requestCode);
                 }
 
@@ -1670,6 +1723,7 @@ public class Session implements Serializable {
             startActivityDelegate = new StartActivityDelegate() {
                 @Override
                 public void startActivityForResult(Intent intent, int requestCode) {
+                    Log.d("YOYO","Using fragment");
                     fragment.startActivityForResult(intent, requestCode);
                 }
 
