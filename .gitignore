@@ -16,3 +16,4 @@ facebook/tests/assets/config.json
 .idea/dictionaries/
 .idea/inspectionProfiles/
 facebook/build/
+*.iml
