@@ -1,7 +1,7 @@
-apply plugin: 'android-library'
+apply plugin: 'android'
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.+'
+    compile project(':facebook')
 }
 
 android {

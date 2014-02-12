@@ -1,7 +1,8 @@
-apply plugin: 'android-library'
+apply plugin: 'android'
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.+'
+    compile project(':facebook')
+    compile project(':TestApp')
 }
 
 android {
@@ -18,6 +19,11 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
             res.srcDirs = ['res']
+        }
+
+        instrumentTest {
+            java.srcDirs = ['src']
+            assets.srcDirs = ['assets']
         }
     }
 }
